@@ -18,11 +18,11 @@ impl Solution {
     l1: Option<Box<ListNode>>,
     l2: Option<Box<ListNode>>,
   ) -> Option<Box<ListNode>> {
-    let dummy_head = Some(Box::new(ListNode::new(0)));
+    let mut dummy_head = Box::new(ListNode::new(0));
     let mut p = l1;
     let mut q = l2;
     let mut carry = 0;
-    let mut curr = dummy_head;
+    let mut curr = &mut dummy_head;
 
     while p != None || q != None {
       let x: i32;
@@ -41,35 +41,22 @@ impl Solution {
       } else {
         y = 0;
       }
+
       let sum = carry + x + y;
       carry = (sum as f64 / 10_f64).floor() as i32;
-      if let Some(box_v) = curr {
-        let mut list = *box_v;
-        list.next = Some(Box::new(ListNode {
-          val: sum % 10,
-          next: None,
-        }));
-        curr = list.next;
-      }
+
+      curr.next = Some(Box::new(ListNode::new(sum % 10)));
+      // Option.as_mut Converts from &mut Option<T> to **Option<&mut T>**.
+      // Option.unwrap 取得 Some 内容
+      curr = curr.next.as_mut().unwrap();
     }
 
     if carry >= 1 {
-      if let Some(box_v) = curr {
-        let mut list = *box_v;
-        list.next = Some(Box::new(ListNode {
-          val: carry,
-          next: None,
-        }));
-        curr = list.next;
-      }
+      curr.next = Some(Box::new(ListNode::new(carry)));
+      curr = curr.next.as_mut().unwrap();
     }
 
-    if let Some(box_v) = dummy_head {
-      let list = *box_v;
-      list.next
-    } else {
-      None
-    }
+    dummy_head.next
   }
 }
 
