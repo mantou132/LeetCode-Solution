@@ -22,7 +22,7 @@ impl Solution {
 #[cfg(test)]
 mod tests {
   #[test]
-  fn it_works() {
+  fn two_sum() {
     assert_eq!(
       super::Solution::two_sum(vec![5, 4, 2, 3, 6], 10),
       vec![4, 1]

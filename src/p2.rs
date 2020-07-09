@@ -63,7 +63,7 @@ impl Solution {
 #[cfg(test)]
 mod tests {
   #[test]
-  fn it_works() {
+  fn add_two_numbers() {
     use super::ListNode;
     use super::Solution;
     let l1 = Some(Box::new(ListNode {
